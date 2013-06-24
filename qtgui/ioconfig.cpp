@@ -246,11 +246,33 @@ void CIoConfig::updateInputSampleRates(int rate)
     {
         if (rate > 0)
             ui->inSrCombo->addItem(QString("%1").arg(rate));
-        ui->inSrCombo->addItem("250000");
-        ui->inSrCombo->addItem("500000");
-        ui->inSrCombo->addItem("2000000");
-        ui->inSrCombo->addItem("4000000");
-        ui->inSrCombo->addItem("8000000");
+
+        int master_clock_freq = 64e6;
+        if (ui->inDevEdit->text().contains("usrp2"))
+            master_clock_freq = 100e6;
+
+        int decim_factor = 4;
+        while (decim_factor <= 512)
+        {
+            QString s = QString::number(master_clock_freq/decim_factor);
+            ui->inSrCombo->addItem(QString("%1").arg(s));
+            decim_factor *= 2;
+        }
+    }
+
+    else if (ui->inDevEdit->text().contains("hackrf"))
+    {
+        if (rate > 0)
+            ui->inSrCombo->addItem(QString("%1").arg(rate));
+
+        int decim_factor = 1;
+        int master_clock_freq = 20e6;
+        while (decim_factor <= 512)
+        {
+            QString s = QString::number(master_clock_freq/decim_factor);
+            ui->inSrCombo->addItem(QString("%1").arg(s));
+            decim_factor *= 2;
+        }
     }
 }
 

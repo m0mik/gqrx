@@ -27,9 +27,17 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
+#include <uhd/utils/msg.hpp>
+
+void my_handler(uhd::msg::type_t type, const std::string &msg){
+    //handle the overrun/underrun messages...
+}
 
 int main(int argc, char *argv[])
 {
+    //setup uhd overrun/underrun handler
+    uhd::msg::register_handler(&my_handler);
+
     std::string conf;
     bool clierr=false;
 
