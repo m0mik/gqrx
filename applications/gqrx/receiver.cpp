@@ -411,13 +411,13 @@ receiver::status receiver::get_rf_range(double *start, double *stop, double *ste
     return STATUS_ERROR;
 }
 
-std:string receiver::set_clock_source(const std::string & clock_source, size_t mboard = 0)
+std:string receiver::set_clock_source(const std::string & clock_source, size_t mboard)
 {
     src->set_clock_source(clock_source, mboard);
     return receiver::get_clock_source(mboard);
 }
 
-std:string receiver::get_clock_source(size_t mboard = 0)
+std:string receiver::get_clock_source(size_t mboard)
 {
     return src->get_clock_source(mboard);
 }
